@@ -1,38 +1,27 @@
-using Unity.VisualScripting;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.SceneManagement;
+using UnityEngine.Video;
 
-public class PlayerController : MonoBehaviour
+public class playercontroller : MonoBehaviour
 {
-    public Animator animator;
-    public PlayerMovement movement;
-    public Transform cameraTransform;
+  public NavMeshAgent agent;
 
-    void Start()
-    {
-        animator = GetComponent<Animator>();
-        movement = GetComponent<PlayerMovement>();
-        cameraTransform = Camera.main.transform;
-    }
-
+    // Update is called once per frame
     void Update()
     {
-        // Rotate the player to face the camera's forward direction
-        Vector3 cameraForward = cameraTransform.forward;
-        cameraForward.y = 0f;
-        Quaternion targetRotation = Quaternion.LookRotation(cameraForward);
-        transform.rotation = targetRotation;
+        if (Input.GetMouseButtonDown(0)) 
+        {
+            Ray movePosition = Camera.main.ScreenPointToRay(Input.mousePosition);   
+            if(Physics.Raycast(movePosition, out var hitInfo))
+            {
+                agent.SetDestination(hitInfo.point);
+            }
 
-        // Update the animator with movement parameters
-        float moveSpeed = movement.isCrouching ? movement.crouchSpeed : movement.speed;
-        float moveAmount = Mathf.Clamp01(Mathf.Abs(movement.moveDirection.x) + Mathf.Abs(movement.moveDirection.z));
-        animator.SetFloat("MoveSpeed", moveSpeed * moveAmount);
-        animator.SetBool("IsCrouching", movement.isCrouching);
-        animator.SetBool("IsGrounded", movement.isGrounded);
+        }
     }
+
+
 }
-
-
-
-
-
-

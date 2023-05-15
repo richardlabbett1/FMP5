@@ -18,7 +18,7 @@ public class EnemyAI : MonoBehaviour
         
         player = GameObject.FindGameObjectWithTag("Player").transform;
         currentState = State.Idle;
-       
+        
     }
 
     private void Update()
@@ -34,7 +34,9 @@ public class EnemyAI : MonoBehaviour
             case State.Attacking:
                 Attack();
                 break;
+
         }
+        
     }
 
     private void Idle()
@@ -47,6 +49,7 @@ public class EnemyAI : MonoBehaviour
             currentState = State.Attacking;
             Debug.Log("lol");
         }
+        Debug.Log("afa");
     }
 
     private void Search()
