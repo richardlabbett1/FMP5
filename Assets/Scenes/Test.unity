@@ -671,7 +671,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 893692676}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
@@ -738,7 +738,8 @@ Transform:
   m_LocalPosition: {x: 7.18, y: 1.04, z: 6.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1335577736}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 57.078, z: 0}
@@ -757,12 +758,9 @@ MonoBehaviour:
   waypoints:
   - {fileID: 1348090036}
   - {fileID: 1837586037}
-  player: {fileID: 824667872}
-  fieldOfViewAngle: 90
+  fieldOfView: 90
   detectionTime: 0
-  chaseSpeed: 3.5
-  patrolSpeed: 2
-  attackRange: 1.5
+  speed: 3.5
 --- !u!195 &893692684
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -808,15 +806,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1335577735}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 17.664383, y: 5.1084523, z: -16.105492}
+  m_LocalRotation: {x: -0, y: -0.47775367, z: 0, w: 0.8784939}
+  m_LocalPosition: {x: 25.02606, y: 4.0684524, z: -3.7137527}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1348090036}
   - {fileID: 1837586037}
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_Father: {fileID: 893692682}
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1348090035
 GameObject:
