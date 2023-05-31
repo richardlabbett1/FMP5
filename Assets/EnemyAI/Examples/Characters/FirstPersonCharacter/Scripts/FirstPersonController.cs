@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine;
 using UnityStandardAssets.Utility;
 using Random = UnityEngine.Random;
 
@@ -12,6 +13,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public bool m_IsWalking;
         public float m_WalkSpeed;
         public float m_RunSpeed;
+        public bool m_IsCrouching;
         [Range(0f, 1f)] public float m_RunstepLenghten;
         public float m_JumpSpeed;
         public float m_StickToGroundForce;
@@ -26,6 +28,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
         public AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         public AudioClip m_LandSound;           // the sound played when character touches back on ground.
+        
 
         private Camera m_Camera;
         private bool m_Jump;
@@ -41,6 +44,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private bool m_Jumping;
         private AudioSource m_AudioSource;
 		private float m_crouchFactor = 2f;
+        
 
         // Use this for initialization
         private void Start()
@@ -84,12 +88,14 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
 			if(Input.GetMouseButtonDown(1))
 			{
+                
 				m_CharacterController.height /= m_crouchFactor;
 				m_WalkSpeed /= m_crouchFactor;
 				m_RunSpeed /= m_crouchFactor;
 				transform.Find("eyes").localPosition /= m_crouchFactor;
 				transform.Find("target").localPosition /= m_crouchFactor;
-			}
+                m_IsCrouching = true;
+            }
 			else if(Input.GetMouseButtonUp(1))
 			{
 				m_CharacterController.height *= m_crouchFactor;
@@ -97,7 +103,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
 				m_RunSpeed *= m_crouchFactor;
 				transform.Find("eyes").localPosition *= m_crouchFactor;
 				transform.Find("target").localPosition *= m_crouchFactor;
-			}
+                m_IsCrouching = false;
+            }
 		}
 
 

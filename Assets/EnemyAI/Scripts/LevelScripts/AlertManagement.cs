@@ -18,7 +18,7 @@ public class AlertManagement : MonoBehaviour
 		// Ping the current alert (if any) periodically. Default period: 1 second.
 		InvokeRepeating("PingAlert", 1, 1);
 	}
-
+	
 	// Alert nearby objects of an event.
 	private void AlertNearby(Vector3 origin, Vector3 target, int wave = 0)
 	{
