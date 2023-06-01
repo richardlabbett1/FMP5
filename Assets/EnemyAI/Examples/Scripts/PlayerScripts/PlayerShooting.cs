@@ -1,8 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using EnemyAI;
-
-// This class is created for the example scene. There is no support for this script.
+	// This class is created for the example scene. There is no support for this script.
 public class PlayerShooting : MonoBehaviour
 {
 	public Transform shotOrigin, drawShotOrigin;
@@ -10,6 +9,7 @@ public class PlayerShooting : MonoBehaviour
 	public WeaponMode weaponMode = WeaponMode.SEMI;
 	public int RPM = 600;
 	public enum WeaponMode
+	public GameObject Gun;
 	{
 		SEMI,
 		AUTO
@@ -45,6 +45,11 @@ public class PlayerShooting : MonoBehaviour
 		{
 			Shoot();
 		}
+		
+       
+		
+     
+
     }
 
 	void Shoot()
