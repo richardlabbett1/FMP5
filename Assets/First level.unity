@@ -84887,6 +84887,10 @@ PrefabInstance:
       propertyPath: canvas
       value: 
       objectReference: {fileID: 414841089}
+    - target: {fileID: 2704119971561592372, guid: bec83dc005e3edc4d9dd1d4dae56fe71, type: 3}
+      propertyPath: Gun
+      value: 
+      objectReference: {fileID: 2031105708}
     m_RemovedComponents: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 2704119970113235622, guid: bec83dc005e3edc4d9dd1d4dae56fe71, type: 3}

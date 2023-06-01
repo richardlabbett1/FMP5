@@ -1,103 +1,115 @@
 ﻿using System.Collections;
 using UnityEngine;
 using EnemyAI;
-	// This class is created for the example scene. There is no support for this script.
+
+// This class is created for the example scene. There is no support for this script.
 public class PlayerShooting : MonoBehaviour
 {
-	public Transform shotOrigin, drawShotOrigin;
-	public LayerMask shotMask;
-	public WeaponMode weaponMode = WeaponMode.SEMI;
-	public int RPM = 600;
-	public enum WeaponMode
-	public GameObject Gun;
-	{
-		SEMI,
-		AUTO
-	}
+    public Transform shotOrigin;
+    public Transform drawShotOrigin;
+    public LayerMask shotMask;
+    public WeaponMode weaponMode = WeaponMode.SEMI;
+    public int RPM = 600;
+    public GameObject Gun;
 
-	private LineRenderer laserLine;
-	private float weaponRange = 100f;
-	private float bulletDamage = 10f;
-	private bool canShot;
+    public enum WeaponMode
+    {
+        SEMI,
+        AUTO
+    }
 
-	private AudioSource gunAudio;
+    private LineRenderer laserLine;
+    private float weaponRange = 100f;
+    private float bulletDamage = 10f;
+    private bool canShoot;
 
-	private WaitForSeconds halfShotDuration;// = new WaitForSeconds(0.06f);
+    private AudioSource gunAudio;
+    private WaitForSeconds halfShotDuration;
 
     // Start is called before the first frame update
     void Start()
     {
-		laserLine = GetComponent<LineRenderer>();
-		gunAudio = GetComponent<AudioSource>();
-		canShot = true;
-		float waitTime = 60f / RPM;
-		halfShotDuration = new WaitForSeconds(waitTime/2);
-	}
+        laserLine = GetComponent<LineRenderer>();
+        gunAudio = GetComponent<AudioSource>();
+        canShoot = true;
+
+        float waitTime = 60f / RPM;
+        halfShotDuration = new WaitForSeconds(waitTime / 2);
+    }
 
     // Update is called once per frame
     void Update()
     {
-		if(weaponMode == WeaponMode.SEMI && Input.GetButtonDown("Fire1") && canShot)
-		{
-			Shoot();
-		}
-		else if(weaponMode == WeaponMode.AUTO && Input.GetButton("Fire1") && canShot)
-		{
-			Shoot();
-		}
-		
-       
-		
-     
+        if (weaponMode == WeaponMode.SEMI && Input.GetButtonDown("Fire1") && canShoot)
+        {
+            Shoot();
+        }
+        else if (weaponMode == WeaponMode.AUTO && Input.GetButton("Fire1") && canShoot)
+        {
+            Shoot();
+        }
+
+        if (Gun.activeSelf)
+        {
+            Debug.Log("The Gun is active.");
+        }
+        else
+        {
+            canShoot = false;
+        }
 
     }
 
-	void Shoot()
-	{
-		StartCoroutine(ShotEffect());
-		laserLine.SetPosition(0, drawShotOrigin.position);
-		Physics.SyncTransforms();
-		if (Physics.Raycast(shotOrigin.position, shotOrigin.forward, out RaycastHit hit, weaponRange, shotMask))
-		{
-			laserLine.SetPosition(1, hit.point);
+    void Shoot()
+    {
+        StartCoroutine(ShotEffect());
 
-			// Call the damage behaviour of target if exists.
-			if(hit.collider)
-				hit.collider.SendMessageUpwards("HitCallback", new HealthManager.DamageInfo(hit.point, shotOrigin.forward, bulletDamage, hit.collider), SendMessageOptions.DontRequireReceiver);
-		}
-		else
-			laserLine.SetPosition(1, drawShotOrigin.position + (shotOrigin.forward * weaponRange));
+        laserLine.SetPosition(0, drawShotOrigin.position);
+        Physics.SyncTransforms();
 
-		// Call the alert manager to notify the shot noise.
-		GameObject.FindGameObjectWithTag("GameController").SendMessage("RootAlertNearby", shotOrigin.position, SendMessageOptions.DontRequireReceiver);
-	}
+        if (Physics.Raycast(shotOrigin.position, shotOrigin.forward, out RaycastHit hit, weaponRange, shotMask))
+        {
+            laserLine.SetPosition(1, hit.point);
 
-	private IEnumerator ShotEffect()
-	{
-		gunAudio.Play();
-		// Turn on our line renderer
-		laserLine.enabled = true;
-		canShot = false;
+            // Call the damage behaviour of target if exists.
+            if (hit.collider != null)
+            {
+                hit.collider.SendMessageUpwards("HitCallback", new HealthManager.DamageInfo(hit.point, shotOrigin.forward, bulletDamage, hit.collider), SendMessageOptions.DontRequireReceiver);
+            }
+        }
+        else
+        {
+            laserLine.SetPosition(1, drawShotOrigin.position + (shotOrigin.forward * weaponRange));
+        }
 
-		yield return halfShotDuration;
+        // Call the alert manager to notify the shot noise.
+        GameObject.FindGameObjectWithTag("GameController").SendMessage("RootAlertNearby", shotOrigin.position, SendMessageOptions.DontRequireReceiver);
+    }
 
-		// Deactivate our line renderer after waiting
-		laserLine.enabled = false;
+    private IEnumerator ShotEffect()
+    {
+        gunAudio.Play();
+        laserLine.enabled = true; // Turn on the line renderer
+        canShoot = false;
 
-		yield return halfShotDuration;
+        yield return halfShotDuration;
 
-		if (weaponMode == WeaponMode.SEMI)
-		{
-			yield return halfShotDuration;
-			yield return halfShotDuration;
-		}
+        laserLine.enabled = false; // Deactivate the line renderer
 
-		canShot = true;
-	}
+        yield return halfShotDuration;
 
-	// Player dead callback.
-	public void PlayerDead()
-	{
-		canShot = false;
-	}
+        if (weaponMode == WeaponMode.SEMI)
+        {
+            yield return halfShotDuration;
+            yield return halfShotDuration;
+        }
+
+        canShoot = true;
+    }
+
+    // Player dead callback.
+    public void PlayerDead()
+    {
+        canShoot = false;
+    }
 }
