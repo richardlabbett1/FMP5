@@ -86,8 +86,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             m_PreviouslyGrounded = m_CharacterController.isGrounded;
 
-			if(Input.GetMouseButtonDown(1))
-			{
+			if (Input.GetKeyDown(KeyCode.LeftControl))
+            {
                 
 				m_CharacterController.height /= m_crouchFactor;
 				m_WalkSpeed /= m_crouchFactor;
@@ -96,8 +96,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
 				transform.Find("target").localPosition /= m_crouchFactor;
                 m_IsCrouching = true;
             }
-			else if(Input.GetMouseButtonUp(1))
-			{
+			else if (Input.GetKeyUp(KeyCode.LeftControl))
+            {
 				m_CharacterController.height *= m_crouchFactor;
 				m_WalkSpeed *= m_crouchFactor;
 				m_RunSpeed *= m_crouchFactor;
