@@ -8,7 +8,7 @@ public class AlertManagement : MonoBehaviour
 	[Tooltip("Time to live. How many extra tiers the alert is forwarded.")]
 	public int extraWaves;
 	[Tooltip("The layer mask of objects to alert.")]
-	public LayerMask alertMask = 1 << 12;
+	
 
 	private Vector3 current;       // The current alert position.
 	private bool alert;            // Is there a new alert to propagate?
@@ -18,7 +18,7 @@ public class AlertManagement : MonoBehaviour
 		// Ping the current alert (if any) periodically. Default period: 1 second.
 		InvokeRepeating("PingAlert", 1, 1);
 	}
-	
+
 	// Alert nearby objects of an event.
 	private void AlertNearby(Vector3 origin, Vector3 target, int wave = 0)
 	{
@@ -28,15 +28,19 @@ public class AlertManagement : MonoBehaviour
 			return;
 
 		// Grab nearby objects to trigger alert.
-		Collider[] targetsInViewRadius = Physics.OverlapSphere(origin, alertRadius, alertMask);
+		Collider[] targetsInViewRadius = Physics.OverlapSphere(origin, alertRadius);
 
 		foreach (Collider obj in targetsInViewRadius)
 		{
-			// Call the object callback to receive the alert.
-			obj.SendMessageUpwards("AlertCallback", target, SendMessageOptions.DontRequireReceiver);
+			// Check if the object is the player by comparing tags.
+			if (obj.CompareTag("Player"))
+			{
+				// Call the object callback to receive the alert.
+				obj.SendMessageUpwards("AlertCallback", target, SendMessageOptions.DontRequireReceiver);
 
-			// Forward alert to nearby objects
-			AlertNearby(obj.transform.position, target, wave + 1);
+				// Forward alert to nearby objects.
+				AlertNearby(obj.transform.position, target, wave + 1);
+			}
 		}
 	}
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using EnemyAI;
+using UnityEngine.UI;
 
 // This class is created for the example scene. There is no support for this script.
 public class PlayerShooting : MonoBehaviour
@@ -13,6 +14,9 @@ public class PlayerShooting : MonoBehaviour
     public GameObject Gun;
     public GameObject Knife;
     public Animator anim;
+    public int ammo = 12;
+    public Text ammoDisplay;
+    
 
 
     public enum WeaponMode
@@ -26,7 +30,7 @@ public class PlayerShooting : MonoBehaviour
     private float bulletDamage = 10f;
     private bool canShoot;
     private float knifeDamage = 100f;
-    private float knifeRange = 5f;
+    private float knifeRange = 2f;
     private bool canStab; 
 
     public AudioSource gunAudio;
@@ -51,6 +55,7 @@ public class PlayerShooting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        ammoDisplay.text = ammo.ToString();
         if (weaponMode == WeaponMode.SEMI && Input.GetButtonDown("Fire1") && canShoot)
         {
             Shoot();
@@ -60,7 +65,7 @@ public class PlayerShooting : MonoBehaviour
             Shoot();
         }
 
-        if (Gun.activeSelf)
+        if (Gun.activeSelf && ammo > 0)
         {
             canShoot = true;
         }
@@ -88,6 +93,8 @@ public class PlayerShooting : MonoBehaviour
 
     void Shoot()
     {
+
+        ammo--;
         StartCoroutine(ShotEffect());
 
         laserLine.SetPosition(0, drawShotOrigin.position);
