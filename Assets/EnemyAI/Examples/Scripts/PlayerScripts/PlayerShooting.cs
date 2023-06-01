@@ -12,6 +12,8 @@ public class PlayerShooting : MonoBehaviour
     public int RPM = 600;
     public GameObject Gun;
     public GameObject Knife;
+    public Animator anim;
+
 
     public enum WeaponMode
     {
@@ -31,6 +33,8 @@ public class PlayerShooting : MonoBehaviour
     public AudioSource stabAudio;
     private WaitForSeconds halfShotDuration;
 
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +42,7 @@ public class PlayerShooting : MonoBehaviour
         gunAudio = GetComponent<AudioSource>();
         canShoot = true;
         canStab = false;
+        
 
         float waitTime = 60f / RPM;
         halfShotDuration = new WaitForSeconds(waitTime / 2);
@@ -75,6 +80,7 @@ public class PlayerShooting : MonoBehaviour
         if (Knife.activeSelf && Input.GetButtonDown("Fire1") && canStab)
         {
             Stab();
+            anim.SetTrigger("Attack");
         }
         
 
@@ -155,11 +161,13 @@ public class PlayerShooting : MonoBehaviour
 
         canShoot = true;
     }
-   
+    
+
     private IEnumerator StabEffect()
     {
         stabAudio.Play();
         laserLine.enabled = false; // Turn on the line renderer
+        
         canStab = false;
 
         yield return halfShotDuration;
