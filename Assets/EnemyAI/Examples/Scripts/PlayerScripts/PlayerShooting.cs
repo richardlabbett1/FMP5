@@ -11,6 +11,7 @@ public class PlayerShooting : MonoBehaviour
     public WeaponMode weaponMode = WeaponMode.SEMI;
     public int RPM = 600;
     public GameObject Gun;
+    public GameObject Knife;
 
     public enum WeaponMode
     {
@@ -22,8 +23,12 @@ public class PlayerShooting : MonoBehaviour
     private float weaponRange = 100f;
     private float bulletDamage = 10f;
     private bool canShoot;
+    private float knifeDamage = 100f;
+    private float knifeRange = 5f;
+    private bool canStab; 
 
-    private AudioSource gunAudio;
+    public AudioSource gunAudio;
+    public AudioSource stabAudio;
     private WaitForSeconds halfShotDuration;
 
     // Start is called before the first frame update
@@ -32,6 +37,7 @@ public class PlayerShooting : MonoBehaviour
         laserLine = GetComponent<LineRenderer>();
         gunAudio = GetComponent<AudioSource>();
         canShoot = true;
+        canStab = false;
 
         float waitTime = 60f / RPM;
         halfShotDuration = new WaitForSeconds(waitTime / 2);
@@ -51,12 +57,26 @@ public class PlayerShooting : MonoBehaviour
 
         if (Gun.activeSelf)
         {
-            Debug.Log("The Gun is active.");
+            canShoot = true;
         }
         else
         {
             canShoot = false;
         }
+        if (Knife.activeSelf)
+        {
+            canStab = true;
+        }
+        else
+        {
+            canStab = false;
+        }
+       
+        if (Knife.activeSelf && Input.GetButtonDown("Fire1") && canStab)
+        {
+            Stab();
+        }
+        
 
     }
 
@@ -86,7 +106,36 @@ public class PlayerShooting : MonoBehaviour
         GameObject.FindGameObjectWithTag("GameController").SendMessage("RootAlertNearby", shotOrigin.position, SendMessageOptions.DontRequireReceiver);
     }
 
-    private IEnumerator ShotEffect()
+    void Stab()
+    {
+        StartCoroutine(StabEffect());
+
+        laserLine.SetPosition(0, drawShotOrigin.position);
+        Physics.SyncTransforms();
+
+        if (Physics.Raycast(shotOrigin.position, shotOrigin.forward, out RaycastHit hit, knifeRange, shotMask))
+        {
+            laserLine.SetPosition(1, hit.point);
+
+            // Call the damage behaviour of target if exists.
+            if (hit.collider != null)
+            {
+                hit.collider.SendMessageUpwards("HitCallback", new HealthManager.DamageInfo(hit.point, shotOrigin.forward, knifeDamage, hit.collider), SendMessageOptions.DontRequireReceiver);
+            }
+        }
+        else
+        {
+            laserLine.SetPosition(1, drawShotOrigin.position + (shotOrigin.forward * knifeRange));
+        }
+
+        // Call the alert manager to notify the shot noise.
+        GameObject.FindGameObjectWithTag("GameController").SendMessage("RootAlertNearby", shotOrigin.position, SendMessageOptions.DontRequireReceiver);
+
+    }
+
+
+
+        private IEnumerator ShotEffect()
     {
         gunAudio.Play();
         laserLine.enabled = true; // Turn on the line renderer
@@ -106,10 +155,32 @@ public class PlayerShooting : MonoBehaviour
 
         canShoot = true;
     }
+   
+    private IEnumerator StabEffect()
+    {
+        stabAudio.Play();
+        laserLine.enabled = false; // Turn on the line renderer
+        canStab = false;
+
+        yield return halfShotDuration;
+
+        laserLine.enabled = false; // Deactivate the line renderer
+
+        yield return halfShotDuration;
+
+        if (weaponMode == WeaponMode.SEMI)
+        {
+            yield return halfShotDuration;
+            yield return halfShotDuration;
+        }
+
+        canStab = true;
+    }
 
     // Player dead callback.
     public void PlayerDead()
     {
+        canStab = false;
         canShoot = false;
     }
 }
