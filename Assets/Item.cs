@@ -8,6 +8,7 @@ public class Item : MonoBehaviour
     public GameObject WinScreen;
     public GameObject player;
     private bool touchingEndTrigger = false;
+    public GameObject eyes;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +23,9 @@ public class Item : MonoBehaviour
     {
         if (TotCollected == 3 && touchingEndTrigger == true)
         {
-            WinScreen.SetActive(true);
+            eyes.SetActive(false);
+            WinScreen.SetActive(true);          
+            Debug.Log("ad");
         }
     }
 }

@@ -10,6 +10,7 @@ public class SimplePlayerHealth : HealthManager
 	public Transform canvas;
 	public GameObject hurtPrefab;
 	public float decayFactor = 0.8f;
+	public GameObject loseScreen;
 
 	private HurtHUD hurtUI;
 
