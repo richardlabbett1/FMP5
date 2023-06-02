@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 // This class is created for the example scene. There is no support for this script.
 namespace UnityStandardAssets.Characters.FirstPerson
 {
+        
     [RequireComponent(typeof (CharacterController))]
     [RequireComponent(typeof (AudioSource))]
     public class FirstPersonController : MonoBehaviour
