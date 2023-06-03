@@ -4,15 +4,21 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityStandardAssets.Characters.FirstPerson;
 
+
 public class pauseMenu2 : MonoBehaviour
 {
     public static bool isGamePaused = false;
     public string Menu;
     public GameObject playerCanvas;
-    public GameObject ThePlayer;
-
+    public GameObject eyes;
+    public GameObject canvasCam;
     public GameObject gameObject;
 
+
+    void Start()
+    {
+        canvasCam.SetActive(false);
+    }
 
     // Update is called once per frame
     void Update()
@@ -32,12 +38,10 @@ public class pauseMenu2 : MonoBehaviour
     {
         gameObject.SetActive(false);
         Time.timeScale = 1f;
-        GameObject playerObject = GameObject.Find("Player");
-        FirstPersonController firstPersonController = playerObject.GetComponent<FirstPersonController>();
-        if (firstPersonController != null)
-        {
-            firstPersonController.enabled = false;
-        }
+
+        eyes.SetActive(true);
+        canvasCam.SetActive(false);
+
 
         playerCanvas.SetActive(true);
         isGamePaused = false;
@@ -46,9 +50,11 @@ public class pauseMenu2 : MonoBehaviour
     {
         gameObject.SetActive(true);
         Time.timeScale = 0f;
-        GameObject.Find("Player").GetComponent<FirstPersonController>().enabled = false;
+        canvasCam.SetActive(true);
+        eyes.SetActive(false);
         playerCanvas.SetActive(false);
         isGamePaused = true;
+        Cursor.visible = true;
     }
 
     public void resumeGame()

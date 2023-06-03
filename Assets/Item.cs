@@ -9,10 +9,12 @@ public class Item : MonoBehaviour
     public GameObject player;
     private bool touchingEndTrigger = false;
     public GameObject eyes;
+    public GameObject canvasCam;
     // Start is called before the first frame update
     void Start()
     {
         WinScreen.SetActive(false);
+        canvasCam.SetActive(false);
     }
     void OnTriggerEnter(Collider other)
     {
@@ -24,7 +26,8 @@ public class Item : MonoBehaviour
         if (TotCollected == 3 && touchingEndTrigger == true)
         {
             eyes.SetActive(false);
-            WinScreen.SetActive(true);          
+            WinScreen.SetActive(true);
+            canvasCam.SetActive(true);
             Debug.Log("ad");
         }
     }

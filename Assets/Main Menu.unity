@@ -278,7 +278,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &355364246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3299,7 +3299,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1376188855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3401,8 +3401,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firstLevel: First level
-  secondLevel: 
-  thirdLevel: 
+  secondLevel: Second Level
+  thirdLevel: Third Level
 --- !u!1 &1417978500
 GameObject:
   m_ObjectHideFlags: 0
@@ -5162,11 +5162,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7634918567408854767, guid: 24a4d046abc7b314fb1204fee1edadc0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: StartGame
+      value: Level1
       objectReference: {fileID: 0}
     - target: {fileID: 7634918567408854767, guid: 24a4d046abc7b314fb1204fee1edadc0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: MainMenu, Assembly-CSharp
+      value: LevelSelect, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7634918567408854767, guid: 24a4d046abc7b314fb1204fee1edadc0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
