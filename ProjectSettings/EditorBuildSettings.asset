@@ -10,12 +10,12 @@ EditorBuildSettings:
     guid: e5f234d36e0412640b95aded78c63db3
   - enabled: 1
     path: Assets/First level.unity
-    guid: 2e19d3e8db8e7234a9173c2f85e69d41
+    guid: 547b1b3c2dda67a4ba157ad762f4fe50
   - enabled: 1
     path: Assets/Second Level.unity
-    guid: 1c49a0e8165414b47b8cc22310854c21
+    guid: 269557e6a060c1f4b9cb0369162c15aa
   - enabled: 1
     path: Assets/Third Level.unity
-    guid: fad1cde2f53d28c40a30ff08a759ad47
+    guid: 9fb2fad91e0e96942af6e4cfe8ae4161
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 447c093330135904780381ac7a24dde6, type: 2}

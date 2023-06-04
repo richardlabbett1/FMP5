@@ -27,10 +27,13 @@ public class pauseMenu2 : MonoBehaviour
             if (isGamePaused)
             {
                 ResumeGame();
+                
             }
             else
             {
                 PauseGame();
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
             }
 
     }
@@ -54,7 +57,7 @@ public class pauseMenu2 : MonoBehaviour
         eyes.SetActive(false);
         playerCanvas.SetActive(false);
         isGamePaused = true;
-        Cursor.visible = true;
+        
     }
 
     public void resumeGame()

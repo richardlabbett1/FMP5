@@ -29,7 +29,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
         public AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         public AudioClip m_LandSound;           // the sound played when character touches back on ground.
-        
+       
 
         private Camera m_Camera;
         private bool m_Jump;

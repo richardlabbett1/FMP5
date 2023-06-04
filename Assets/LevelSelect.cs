@@ -11,7 +11,8 @@ public class LevelSelect : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     // Update is called once per frame
@@ -34,6 +35,12 @@ public class LevelSelect : MonoBehaviour
     public void Level3()
     {
         SceneManager.LoadScene(thirdLevel);
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
+        Debug.Log("ad");
     }
 
 

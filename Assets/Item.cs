@@ -26,6 +26,8 @@ public class Item : MonoBehaviour
         if (TotCollected == 3 && touchingEndTrigger == true)
         {
             eyes.SetActive(false);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             WinScreen.SetActive(true);
             canvasCam.SetActive(true);
             Debug.Log("ad");
